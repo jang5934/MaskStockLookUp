@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/force_location_setting_layout"
+    tools:context=".ForceLocationSettingActivity"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/search_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/address_edit_text"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_weight="10"
+            android:hint="주소 입력" />
+
+        <Button
+            android:id="@+id/address_search_button"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:text="검색" />
+
+    </LinearLayout>
+
+    <fragment
+        android:layout_below="@+id/search_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/force_search_map"
+        tools:context=".ForceLocationSettingActivity"
+        android:name="com.google.android.gms.maps.SupportMapFragment" />
+
+</RelativeLayout>
