@@ -99,6 +99,12 @@ public class ForceLocationSettingActivity extends FragmentActivity implements On
             @Override
             public void onClick(View v){
                 String str = address_edit.getText().toString();
+
+                if(str.length() == 0) {
+                    Toast.makeText(ForceLocationSettingActivity.this, "검색어를 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 List<Address> addressList = null;
                 try {
                     addressList = geocoder.getFromLocationName(
