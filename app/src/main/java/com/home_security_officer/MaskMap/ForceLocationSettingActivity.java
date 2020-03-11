@@ -1,4 +1,4 @@
-package com.example.maskstocklookup;
+package com.home_security_officer.MaskMap;
 
 import androidx.fragment.app.FragmentActivity;
 
@@ -38,7 +38,6 @@ public class ForceLocationSettingActivity extends FragmentActivity implements On
 
     private MarkerOptions mOptions;
     private Marker mMarker;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

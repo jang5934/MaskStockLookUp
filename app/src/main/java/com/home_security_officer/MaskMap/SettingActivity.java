@@ -1,4 +1,4 @@
-package com.example.maskstocklookup;
+package com.home_security_officer.MaskMap;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;

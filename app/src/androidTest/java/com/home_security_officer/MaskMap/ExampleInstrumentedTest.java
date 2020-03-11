@@ -1,4 +1,4 @@
-package com.example.maskstocklookup;
+package com.home_security_officer.MaskMap;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("com.example.maskstocklookup", appContext.getPackageName());
+        assertEquals("com.home_security_officer.MaskMap", appContext.getPackageName());
     }
 }

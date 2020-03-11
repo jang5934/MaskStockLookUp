@@ -1,4 +1,4 @@
-package com.example.maskstocklookup;
+package com.home_security_officer.MaskMap;
 
 public class Seller {
     private String addr;

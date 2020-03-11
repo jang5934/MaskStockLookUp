@@ -1,4 +1,4 @@
-package com.example.maskstocklookup;
+package com.home_security_officer.MaskMap;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
@@ -143,7 +143,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.position(new LatLng(temp_obj.getLat(), temp_obj.getLng()));
                 markerOptions.alpha(0.7f);
-                markerOptions.title(temp_obj.getName() + "(현재상태:" + temp_obj.getRemain_stat()+ ")");
+
+                markerOptions.title(temp_obj.getName() + "(재고:" + transferStatus(temp_obj.getRemain_stat()) + ")");
                 markerOptions.snippet(temp_obj.getAddr());
 
                 if(temp_obj.getRemain_stat().equals("plenty"))
@@ -163,6 +164,17 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             e.printStackTrace();
         }
         addMarker(current_latitude, current_longitude);
+    }
+
+    public String transferStatus(String eng) {
+        if(eng.equals("plenty"))
+            return "넉넉";
+        else if(eng.equals("some"))
+            return "적당";
+        else if(eng.equals("few"))
+            return "얼마없음";
+        else
+            return "없음";
     }
 
     @Override
@@ -269,7 +281,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.position(new LatLng(temp_obj.getLat(), temp_obj.getLng()));
                 markerOptions.alpha(0.7f);
-                markerOptions.title(temp_obj.getName() + "(현재상태:" + temp_obj.getRemain_stat()+ ")");
+                markerOptions.title(temp_obj.getName() + "(재고:" + transferStatus(temp_obj.getRemain_stat()) + ")");
                 markerOptions.snippet(temp_obj.getAddr());
 
                 if(temp_obj.getRemain_stat().equals("plenty"))

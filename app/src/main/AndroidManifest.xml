@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.maskstocklookup">
+    package="com.home_security_officer.MaskMap">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -12,14 +12,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SettingActivity" />
-        <activity android:name=".ForceLocationSettingActivity" />
+        <activity android:name="com.home_security_officer.MaskMap.SettingActivity" />
+        <activity android:name="com.home_security_officer.MaskMap.ForceLocationSettingActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBHa4PhH4FVqH6-IbjyZGyd-853P_Ciga0" />
 
-        <activity android:name=".MainActivity">
+        <activity android:name="com.home_security_officer.MaskMap.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
