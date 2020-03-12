@@ -71,20 +71,21 @@ public class ForceLocationSettingActivity extends FragmentActivity implements On
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener(){
             @Override
             public void onMapClick(LatLng point) {
-                Double latitude = point.latitude;
-                Double longitude = point.longitude;
+                lat = point.latitude;
+                lng = point.longitude;
 
                 List<Address> addressList = null;
                 try {
                     addressList = geocoder.getFromLocation(
-                            latitude, longitude, 10);
+                            lat, lng, 10);
                 }
                 catch (IOException e) {
                     e.printStackTrace();
                 }
+
                 String []splitStr = addressList.get(0).toString().split(",");
                 String address = splitStr[0].substring(splitStr[0].indexOf("\"") + 1,splitStr[0].length() - 2);
-                addMarker(mOptions, address, new LatLng(latitude, longitude));
+                addMarker(mOptions, address, new LatLng(lat, lng));
             }
         });
 
@@ -163,9 +164,6 @@ public class ForceLocationSettingActivity extends FragmentActivity implements On
     }
 
     public void setConfirmButton(Marker marker) {
-
-        lat = marker.getPosition().latitude;
-        lng = marker.getPosition().longitude;
         mMarker.showInfoWindow();
         RelativeLayout relativeLayout = findViewById(R.id.force_location_setting_layout);
 
