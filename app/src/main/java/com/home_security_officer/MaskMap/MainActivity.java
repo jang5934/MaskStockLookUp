@@ -283,7 +283,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         addMarker(current_latitude, current_longitude);
 
         int color = Color.parseColor("#0099FF99");
-        float initialRadius = 10;
+        float initialRadius = searching_range / 150;
         float maxRadius = searching_range;
         CircleOptions co = new CircleOptions().center(new LatLng(current_latitude, current_longitude)).radius(initialRadius).strokeColor(color).fillColor(Color.TRANSPARENT).strokeWidth(1.0f);
         Circle c = mMap.addCircle(co);
@@ -349,7 +349,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         private int baseColor, color, initialColor;
         private Handler h;
         private Circle c;
-        private float radiusJump = 40;
+        private float radiusJump = searching_range / 37;
         int numIncrements, alphaIncrement;
         private CircleOptions co;
 
