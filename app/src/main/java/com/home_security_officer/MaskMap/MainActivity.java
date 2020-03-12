@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Criteria;
@@ -21,6 +22,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -31,6 +33,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -56,6 +60,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private int REQUEST_FORCE_LOCATION_SETTING = 1;
     private int REQUEST_RANGE_SETTING = 2;
+
+    private Handler pulse_h;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,37 +139,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
 
         mMap.clear();
-        RequestData requestData = new RequestData((float)current_latitude, (float)current_longitude, searching_range);
-        try {
-            ArrayList<Seller> sellers = requestData.execute().get();
-            Iterator<Seller> it = sellers.iterator();
-
-            while(it.hasNext()) {
-                Seller temp_obj = it.next();
-                MarkerOptions markerOptions = new MarkerOptions();
-                markerOptions.position(new LatLng(temp_obj.getLat(), temp_obj.getLng()));
-                markerOptions.alpha(0.7f);
-
-                markerOptions.title(temp_obj.getName() + "(재고:" + transferStatus(temp_obj.getRemain_stat()) + ")");
-                markerOptions.snippet(temp_obj.getAddr());
-
-                if(temp_obj.getRemain_stat().equals("plenty"))
-                    markerOptions.icon(bitmapDescriptorFromVector(this, R.drawable.ic_location_on_plenty_24dp));
-                else if(temp_obj.getRemain_stat().equals("some"))
-                    markerOptions.icon(bitmapDescriptorFromVector(this, R.drawable.ic_location_on_some_24dp));
-                else if(temp_obj.getRemain_stat().equals("few"))
-                    markerOptions.icon(bitmapDescriptorFromVector(this, R.drawable.ic_location_on_few_24dp));
-                else
-                    markerOptions.icon(bitmapDescriptorFromVector(this, R.drawable.ic_location_on_empty_24dp));
-
-                mMap.addMarker(markerOptions);
-            }
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        addMarker(current_latitude, current_longitude);
+        drawMarkers();
     }
 
     public String transferStatus(String eng) {
@@ -271,6 +247,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         current_latitude = currentLocation.getLatitude();
         current_longitude = currentLocation.getLongitude();
 
+        drawMarkers();
+    }
+
+    public void drawMarkers() {
         RequestData requestData = new RequestData((float)current_latitude, (float)current_longitude, searching_range);
         try {
             ArrayList<Seller> sellers = requestData.execute().get();
@@ -281,17 +261,17 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.position(new LatLng(temp_obj.getLat(), temp_obj.getLng()));
                 markerOptions.alpha(0.7f);
-                markerOptions.title(temp_obj.getName() + "(재고:" + transferStatus(temp_obj.getRemain_stat()) + ")");
+                markerOptions.title(temp_obj.getName() + " (재고:" + transferStatus(temp_obj.getRemain_stat()) + ")");
                 markerOptions.snippet(temp_obj.getAddr());
 
                 if(temp_obj.getRemain_stat().equals("plenty"))
-                    markerOptions.icon(bitmapDescriptorFromVector(this, R.drawable.ic_location_on_plenty_24dp));
+                    markerOptions.icon(bitmapDescriptorFromVector(this, R.drawable.ic_location_on_plenty_40dp));
                 else if(temp_obj.getRemain_stat().equals("some"))
-                    markerOptions.icon(bitmapDescriptorFromVector(this, R.drawable.ic_location_on_some_24dp));
+                    markerOptions.icon(bitmapDescriptorFromVector(this, R.drawable.ic_location_on_some_40dp));
                 else if(temp_obj.getRemain_stat().equals("few"))
-                    markerOptions.icon(bitmapDescriptorFromVector(this, R.drawable.ic_location_on_few_24dp));
+                    markerOptions.icon(bitmapDescriptorFromVector(this, R.drawable.ic_location_on_few_40dp));
                 else
-                    markerOptions.icon(bitmapDescriptorFromVector(this, R.drawable.ic_location_on_empty_24dp));
+                    markerOptions.icon(bitmapDescriptorFromVector(this, R.drawable.ic_location_on_empty_40dp));
 
                 mMap.addMarker(markerOptions);
             }
@@ -301,6 +281,19 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             e.printStackTrace();
         }
         addMarker(current_latitude, current_longitude);
+
+        int color = Color.parseColor("#0099FF99");
+        float initialRadius = 10;
+        float maxRadius = searching_range;
+        CircleOptions co = new CircleOptions().center(new LatLng(current_latitude, current_longitude)).radius(initialRadius).strokeColor(color).fillColor(Color.TRANSPARENT).strokeWidth(1.0f);
+        Circle c = mMap.addCircle(co);
+        Circle c2 = mMap.addCircle(co);
+
+        if(pulse_h != null)
+            pulse_h.removeCallbacksAndMessages(null);
+        pulse_h = new Handler();
+        pulse_h.postDelayed(new Fader(pulse_h, c, initialRadius, maxRadius, color, co), 300);
+        pulse_h.postDelayed(new Fader(pulse_h, c2, initialRadius, maxRadius, color, co), 750);
     }
 
     private void addMarker(double lat, double lng) {
@@ -319,7 +312,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(new LatLng(lat, lng));
-        markerOptions.alpha(0.5f);
+        markerOptions.anchor(0.5f, 0.5f);
+        markerOptions.icon(bitmapDescriptorFromVector(this, R.drawable.ic_radio_button_checked_black_24dp));
         markerOptions.title("현재위치");
         markerOptions.snippet(address);
         mMarker = mMap.addMarker(markerOptions);
@@ -349,4 +343,54 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
         zoom_level = lv_cnt;
     }
+
+    private class Fader implements Runnable {
+        private float radius, initialRadius, maxRadius;
+        private int baseColor, color, initialColor;
+        private Handler h;
+        private Circle c;
+        private float radiusJump = 40;
+        int numIncrements, alphaIncrement;
+        private CircleOptions co;
+
+        public Fader(Handler h, Circle c, float initialRadius, float maxRadius, int initialColor, CircleOptions co) {
+            this.initialRadius = initialRadius;
+            this.initialColor = initialColor;
+            this.maxRadius = maxRadius;
+            this.h = h;
+            this.c = c;
+            this.co = co;
+            reset();
+        }
+
+        private void reset() {
+            radius = initialRadius;
+            this.color = initialColor;
+            this.baseColor = initialColor;
+            numIncrements = (int)((maxRadius - initialRadius) / radiusJump);
+            alphaIncrement = 0x100 / numIncrements;
+            if (alphaIncrement <= 0) alphaIncrement = 1;
+        }
+
+        public void run() {
+            int alpha = Color.alpha(color);
+            radius = radius + radiusJump;
+            c.setRadius(radius);
+            alpha -= alphaIncrement;
+            color = Color.argb(alpha, Color.red(baseColor), Color.green(baseColor), Color.blue(baseColor));
+            c.setFillColor(Color.TRANSPARENT);
+            c.setStrokeColor(color);
+            c.setStrokeWidth(11.0f);
+
+            if (radius < maxRadius) {
+                h.postDelayed(this, 25);
+            } else {
+                c.remove();
+                reset();
+                c = mMap.addCircle(co);
+                h.postDelayed(this, 2000);
+            }
+        }
+    }
+
 }

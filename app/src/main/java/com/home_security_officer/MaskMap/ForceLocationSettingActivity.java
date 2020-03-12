@@ -4,6 +4,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.GradientDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -172,6 +173,13 @@ public class ForceLocationSettingActivity extends FragmentActivity implements On
             Button setCurrentLocationButton = new Button(ForceLocationSettingActivity.this);
             setCurrentLocationButton.setTag("confirm_current_location_button");
             setCurrentLocationButton.setText("이 위치로 검색하기");
+
+            GradientDrawable gd = new GradientDrawable();
+            gd.setColor(0xFFFFFFFF); // Changes this drawbale to use a single color instead of a gradient
+            gd.setCornerRadius(3);
+            gd.setStroke(5, 0xFFd8d8d8);
+
+            setCurrentLocationButton.setBackground(gd);
 
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
                     RelativeLayout.LayoutParams.MATCH_PARENT,
