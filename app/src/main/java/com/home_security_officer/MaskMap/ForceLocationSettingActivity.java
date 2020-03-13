@@ -124,7 +124,10 @@ public class ForceLocationSettingActivity extends FragmentActivity implements On
                     String address = splitStr[0].substring(splitStr[0].indexOf("\"") + 1, splitStr[0].length() - 2);
                     String latitude = splitStr[10].substring(splitStr[10].indexOf("=") + 1);
                     String longitude = splitStr[12].substring(splitStr[12].indexOf("=") + 1);
-                    addMarker(mOptions, address, new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude)));
+                    LatLng tempLatlng = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
+                    lat = tempLatlng.latitude;
+                    lng = tempLatlng.longitude;
+                    addMarker(mOptions, address, tempLatlng);
                 }
                 InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
