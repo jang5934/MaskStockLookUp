@@ -42,8 +42,12 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -62,6 +66,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private int REQUEST_RANGE_SETTING = 2;
 
     private Handler pulse_h;
+    private ArrayList<Seller> sellers;
+    private Map<Marker, Seller> allMarkersMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,20 +143,20 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 Toast.makeText(MainActivity.this, "기존 설정된 범위로 검색합니다.", Toast.LENGTH_SHORT).show();
             }
         }
-
-        mMap.clear();
         drawMarkers();
     }
 
     public String transferStatus(String eng) {
         if(eng.equals("plenty"))
-            return "넉넉";
+            return "100개 이상";
         else if(eng.equals("some"))
-            return "적당";
+            return "100개 미만";
         else if(eng.equals("few"))
-            return "얼마없음";
+            return "30개 미만";
+        else if(eng.equals("empty"))
+            return "2개 미만";
         else
-            return "없음";
+            return "판매중지";
     }
 
     @Override
@@ -165,7 +171,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                             " 현재 위치를 직접 설정해주세요.");
                     builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            // 설정 액티비티로 넘어감
+                            Intent intent = new Intent(MainActivity.this, ForceLocationSettingActivity.class);
+                            startActivityForResult(intent, REQUEST_FORCE_LOCATION_SETTING);
                         }
                     });
                     builder.show();
@@ -247,13 +254,35 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         current_latitude = currentLocation.getLatitude();
         current_longitude = currentLocation.getLongitude();
 
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                Seller temp_seller_data = allMarkersMap.get(marker);
+
+                if(temp_seller_data == null)
+                    return;
+
+                Intent intent = new Intent(MainActivity.this, DetailedInformationActivity.class);
+                intent.putExtra("type", temp_seller_data.getType());
+                intent.putExtra("name", temp_seller_data.getName());
+                intent.putExtra("addr", temp_seller_data.getAddr());
+                intent.putExtra("stock_at", temp_seller_data.getStock_at());
+                intent.putExtra("remain_stat", temp_seller_data.getRemain_stat());
+                intent.putExtra("created_at", temp_seller_data.getCreated_at());
+
+                startActivity(intent);
+            }
+        });
+
         drawMarkers();
     }
 
     public void drawMarkers() {
+        mMap.clear();
         RequestData requestData = new RequestData((float)current_latitude, (float)current_longitude, searching_range);
         try {
-            ArrayList<Seller> sellers = requestData.execute().get();
+            allMarkersMap = new HashMap<Marker, Seller>();
+            sellers = requestData.execute().get();
             Iterator<Seller> it = sellers.iterator();
 
             while(it.hasNext()) {
@@ -273,7 +302,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 else
                     markerOptions.icon(bitmapDescriptorFromVector(this, R.drawable.ic_location_on_empty_40dp));
 
-                mMap.addMarker(markerOptions);
+                allMarkersMap.put(mMap.addMarker(markerOptions), temp_obj);
             }
         } catch (ExecutionException e) {
             e.printStackTrace();
@@ -392,5 +421,4 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         }
     }
-
 }

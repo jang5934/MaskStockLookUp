@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:orientation="vertical"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:stretchColumns="1"
+tools:context=".DetailedInformationActivity">
+    <TableRow
+        android:paddingTop="15dp"
+        android:paddingLeft="5dp">
+        <TextView
+            android:layout_height="wrap_content"
+            android:text="판매처 유형 :"
+            android:textAlignment="textEnd"
+            android:textSize="17sp"
+            android:layout_column="0"/>
+        <TextView
+            android:id="@+id/seller_type"
+            android:paddingLeft="5dp"
+            android:layout_height="wrap_content"
+            android:layout_column="1"/>
+    </TableRow>
+    <TableRow
+        android:paddingTop="15dp"
+        android:paddingLeft="5dp">
+        <TextView
+            android:layout_height="wrap_content"
+            android:text="판매처 이름 :"
+            android:textAlignment="textEnd"
+            android:textSize="17sp"
+            android:layout_column="0"/>
+        <TextView
+            android:id="@+id/seller_name"
+            android:paddingLeft="5dp"
+            android:layout_height="wrap_content"
+            android:layout_column="1" />
+    </TableRow>
+    <TableRow
+        android:paddingTop="15dp"
+        android:paddingLeft="5dp">
+        <TextView
+            android:layout_height="wrap_content"
+            android:text="판매처 주소 :"
+            android:textAlignment="textEnd"
+            android:textSize="17sp"
+            android:layout_column="0"/>
+        <TextView
+            android:id="@+id/seller_addr"
+            android:paddingLeft="5dp"
+            android:layout_height="wrap_content"
+            android:layout_column="1" />
+    </TableRow>
+    <TableRow
+        android:paddingTop="15dp"
+        android:paddingLeft="5dp">
+        <TextView
+            android:layout_height="wrap_content"
+            android:text="마지막 입고 시간 :"
+            android:textAlignment="textEnd"
+            android:textSize="17sp"
+            android:layout_column="0" />
+        <TextView
+            android:id="@+id/seller_stock_at"
+            android:paddingLeft="5dp"
+            android:layout_height="wrap_content"
+            android:layout_column="1"/>
+    </TableRow>
+    <TableRow
+        android:paddingTop="15dp"
+        android:paddingLeft="5dp">
+        <TextView
+            android:layout_height="wrap_content"
+            android:text="재고 상태 :"
+            android:textAlignment="textEnd"
+            android:textSize="17sp"
+            android:layout_column="0"/>
+        <TextView
+            android:id="@+id/seller_remain_stat"
+            android:paddingLeft="5dp"
+            android:layout_height="wrap_content"
+            android:layout_column="1"/>
+    </TableRow>
+    <TableRow
+        android:paddingTop="15dp"
+        android:paddingLeft="5dp">
+        <TextView
+            android:layout_height="wrap_content"
+            android:text="최근 재고 갱신 시간 :"
+            android:textAlignment="textEnd"
+            android:textSize="17sp"
+            android:layout_column="0"/>
+        <TextView
+            android:id="@+id/seller_created_at"
+            android:paddingLeft="5dp"
+            android:layout_height="wrap_content"
+            android:layout_column="1"/>
+    </TableRow>
+</TableLayout>

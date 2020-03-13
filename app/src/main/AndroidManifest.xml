@@ -12,17 +12,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.home_security_officer.MaskMap.SettingActivity"
+        <activity android:name=".DetailedInformationActivity"></activity>
+        <activity
+            android:name=".SettingActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.home_security_officer.MaskMap.ForceLocationSettingActivity"
+        <activity
+            android:name=".ForceLocationSettingActivity"
             android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBHa4PhH4FVqH6-IbjyZGyd-853P_Ciga0" />
 
-        <activity android:name="com.home_security_officer.MaskMap.MainActivity"
-            android:screenOrientation="portrait" >
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
