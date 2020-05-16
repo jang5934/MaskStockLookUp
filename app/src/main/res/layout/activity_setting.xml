@@ -28,24 +28,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="300dp"
-        android:layout_marginRight="30dp"
-        android:textSize="11sp"
-        android:text="'앱 마켓 모바일콘텐츠 결제 가이드라인'을 확인하여 건전한 앱 사용 문화를 이끌어나가주세요." />
-
-    <TextView
-        android:id="@+id/check_rule_hyper_link"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="30dp"
-        android:textSize="11sp"
-        android:text="앱 마켓 모바일콘텐츠 결제 가이드라인 확인하기" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
