@@ -1,3 +1,10 @@
 # MaskStockLookUp
-Instantly developed.
-![alt text](https://github.com/jang5934/MaskStockLookUp/blob/master/preview_01.png)
+<div>
+  Instantly developed.
+</div>
+<div>
+  <img src = "https://github.com/jang5934/MaskStockLookUp/blob/master/preview_01.png" width="20%" height="20%">
+  <img src = "https://github.com/jang5934/MaskStockLookUp/blob/master/preview_02.png" width="20%" height="20%">
+  <img src = "https://github.com/jang5934/MaskStockLookUp/blob/master/preview_03.png" width="20%" height="20%">
+  <img src = "https://github.com/jang5934/MaskStockLookUp/blob/master/preview_04.png" width="20%" height="20%">
+</div>
