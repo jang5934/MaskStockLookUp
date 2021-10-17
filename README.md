@@ -10,6 +10,6 @@
   <img src = "https://github.com/jang5934/MaskStockLookUp/blob/master/preview_04.png" width="20%" height="20%">
 </div>
 <div>
-  OneStore : https://onesto.re/0000747034
+  OneStore : https://onesto.re/0000747034 <br>
   Google Play : https://play.google.com/store/apps/details?id=com.home_security_officer.MaskMap
 <div>
